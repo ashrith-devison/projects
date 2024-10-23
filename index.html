@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Message Sender</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var phoneNumbers = [];
+        var message = '';
+
+        function sendWhatsAppMessage() {
+            // Get the phone numbers and message from the input fields
+            phoneNumbers = $('#phoneNumbers').val().split(',');
+            message = $('#message').val();
+
+            // Clear previous links
+            $('#links').empty();
+
+            // Function to create and display message links
+            function createMessageLink(phoneNumber, index) {
+                var sendUrl = "https://api.whatsapp.com/send?phone=" + encodeURIComponent(phoneNumber.trim()) + "&text=" + encodeURIComponent(message);
+                var link = $('<a></a>').attr('href', sendUrl).attr('target', '_blank').text('Send to ' + phoneNumber.trim());
+                var checkbox = $('<input type="checkbox">').attr('id', 'checkbox-' + index);
+                
+                link.on('click', function() {
+                    $('#checkbox-' + index).prop('checked', true);
+                });
+
+                $('#links').append(checkbox).append(link).append('<br>');
+            }
+
+            // Create and display links for all phone numbers
+            phoneNumbers.forEach(function(phoneNumber, index) {
+                createMessageLink(phoneNumber, index);
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>WhatsApp Message Sender</h1>
+        <form>
+            <label for="phoneNumbers">Phone Numbers (comma separated):</label><br>
+            <textarea id="phoneNumbers" name="phoneNumbers" rows="5" cols="50" required></textarea><br><br>
+            <label for="message">Message:</label><br>
+            <textarea id="message" name="message" rows="10" cols="50" required></textarea><br><br>
+            <button type="button" onclick="sendWhatsAppMessage();">Generate Links</button>
+        </form>
+        <div id="links"></div>
+    </div>
+</body>
+</html>
