@@ -20,7 +20,7 @@
 
             // Function to create and display message links
             function createMessageLink(phoneNumber, index) {
-                var sendUrl = "https://api.whatsapp.com/send?phone=" + encodeURIComponent(phoneNumber.trim()) + "&text=" + encodeURIComponent(message);
+                var sendUrl = "https://web.whatsapp.com/send?phone=" + encodeURIComponent(phoneNumber.trim()) + "&text=" + encodeURIComponent(message);
                 var link = $('<a></a>').attr('href', sendUrl).attr('target', '_blank').text('Send to ' + phoneNumber.trim());
                 var checkbox = $('<input type="checkbox">').attr('id', 'checkbox-' + index);
                 
